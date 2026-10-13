@@ -12,6 +12,7 @@ redirect to a signed link, so follow redirects (`curl -L`).
 | `wide.csv` | One header row, then one row per twin: the twin's descriptors and survey variables next to the answers. |
 | `long.csv` | One row per twin and answer, with the twin's descriptors: for analysis in R, Stata or Python. |
 | `conjoint-exposures.csv` | Conjoint blocks: every profile each twin saw, task by task, with the choice. |
+| `conjoint-partworths.csv` | Adaptive conjoint blocks: each twin's final estimated value (partworth) of every level, fitted from all its answers, with the estimate's status (an estimate that could not be made has blank values). |
 | `maxdiff-exposures.csv` | MaxDiff blocks: every subset each twin saw, with the best and worst picks. |
 | `question-logic.json` | The survey as it ran: questions, options, logic. |
 | `report.pdf` | The written report, when the run had `report: "full"`. |

@@ -2513,7 +2513,7 @@
             "within_task",
             "within_participant"
           ],
-          "description": "Where two identical profiles may not appear: in one task ('within_task', the default; two identical options never share a task, and 'allow' from older surveys reads the same), or anywhere in one participant's tasks ('within_participant'; not for an adaptive design). A participant gets the same set of options twice only when no other can be made."
+          "description": "Where two identical profiles may not appear: in one task ('within_task', the default; two identical options never share a task, and 'allow' from older surveys reads the same), or anywhere in one participant's tasks ('within_participant'; not for an adaptive design). The generator tries to avoid repeated sets of options; a repeat is recorded when its bounded search finds no new set."
         },
         "max_attempts": {
           "type": "integer",

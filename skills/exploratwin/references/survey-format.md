@@ -319,7 +319,8 @@ alternatives and asks about them.
   by weight; profiles that break a rule are drawn again. Two identical options
   never share a task (`duplicates: "within_task"`, the default);
   `"within_participant"` also keeps a twin from seeing the same profile twice.
-  A twin gets the same set of options again only when no other can be made.
+  The generator also avoids giving a twin the same set of options twice; when
+  its search finds no new set, the repeat is recorded.
 - `"supplied"`: `versions` (each `id` and `tasks`; a task has `id` and
   `alternatives`, each `{"id", "levels": {attribute: level}}`); each twin gets one
   version, at random or `assignment: "by_index"`.

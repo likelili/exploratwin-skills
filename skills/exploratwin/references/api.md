@@ -266,7 +266,7 @@ Earlier: `409 run_not_finished`.
 
 Downloads one file of a completed run (`409 run_not_finished` before); it may
 answer with a redirect to a signed link, so follow redirects (`curl -L`). Files: `labels.csv`, `values.csv`, `repaired.csv`,
-`long.csv`, `wide.csv`, `conjoint-exposures.csv`, `maxdiff-exposures.csv`,
+`long.csv`, `wide.csv`, `conjoint-exposures.csv`, `conjoint-partworths.csv`, `maxdiff-exposures.csv`,
 `report.pdf`, `question-logic.json`, `manifest.json`, `bundle.zip`. See
 [results.md](results.md).
 
