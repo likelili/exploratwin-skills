@@ -1,0 +1,4 @@
+interface:
+  display_name: "ExploraTwin"
+  short_description: "Build surveys and prepare digital-twin runs for your approval"
+  default_prompt: "Use $exploratwin to build this survey on ExploraTwin, check it, and prepare a run for my approval."

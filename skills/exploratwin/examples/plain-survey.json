@@ -1,0 +1,91 @@
+{
+  "schema_version": "0.1",
+  "id": "streaming_habits",
+  "title": "Streaming habits",
+  "description": "A short survey: single and multiple choice, a number, a rating grid and an open question.",
+  "questions": [
+    {
+      "id": "intro",
+      "content": [{"type": "text", "text": "This short survey asks how you watch films and series at home."}]
+    },
+    {
+      "id": "services",
+      "export_name": "Q1",
+      "content": [{"type": "text", "text": "Which streaming services do you pay for? Select all that apply."}],
+      "response": {
+        "type": "choice",
+        "mode": "multiple",
+        "required": true,
+        "min_selected": 1,
+        "options": [
+          {"id": "netflix", "label": "Netflix"},
+          {"id": "prime", "label": "Prime Video"},
+          {"id": "disney", "label": "Disney+"},
+          {"id": "max", "label": "Max"},
+          {"id": "other", "label": "Another service", "write_in": true},
+          {"id": "none", "label": "None"}
+        ],
+        "randomization": {"order": "positions", "positions": [{"draw": "shuffled"}, {"draw": "shuffled"}, {"draw": "shuffled"}, {"draw": "shuffled"}, "other", "none"], "shuffled": ["netflix", "prime", "disney", "max"]}
+      }
+    },
+    {
+      "id": "hours",
+      "export_name": "Q2",
+      "content": [{"type": "text", "text": "In a typical week, how many hours do you spend watching streamed films or series?"}],
+      "response": {"type": "number", "required": true, "min": 0, "max": 60, "step": 1, "decimals": 0}
+    },
+    {
+      "id": "price_change",
+      "export_name": "Q3",
+      "content": [{"type": "text", "text": "If your main service raised its price by $3 a month, what would you most likely do?"}],
+      "response": {
+        "type": "choice",
+        "mode": "single",
+        "required": true,
+        "options": [
+          {"id": "keep", "label": "Keep it and pay more", "code": 1},
+          {"id": "downgrade", "label": "Move to a cheaper plan with ads", "code": 2},
+          {"id": "switch", "label": "Cancel it and switch to another service", "code": 3},
+          {"id": "cancel", "label": "Cancel it and not replace it", "code": 4}
+        ]
+      }
+    },
+    {
+      "id": "agree",
+      "export_name": "Q4",
+      "content": [{"type": "text", "text": "How much do you agree with each statement?"}],
+      "response": {
+        "type": "matrix",
+        "mode": "per_row",
+        "rows": [
+          {"id": "too_many", "label": "There are too many streaming services."},
+          {"id": "ads_ok", "label": "I don't mind ads if the price is lower."},
+          {"id": "share", "label": "Sharing an account with family should be allowed."}
+        ],
+        "row_response": {
+          "type": "choice",
+          "mode": "single",
+          "required": true,
+          "options": [
+            {"id": "1", "label": "Strongly disagree", "code": 1},
+            {"id": "2", "label": "Disagree", "code": 2},
+            {"id": "3", "label": "Neither agree nor disagree", "code": 3},
+            {"id": "4", "label": "Agree", "code": 4},
+            {"id": "5", "label": "Strongly agree", "code": 5}
+          ]
+        },
+        "randomization": {"order": "shuffle"}
+      }
+    },
+    {
+      "id": "why",
+      "export_name": "Q5",
+      "content": [{"type": "text", "text": "In a sentence or two, what would make you cancel a streaming service?"}],
+      "response": {"type": "text", "max_length": 400}
+    }
+  ],
+  "blocks": [
+    {"id": "main", "kind": "survey", "title": "Streaming", "questions": ["intro", "services", "hours", "price_change", "agree", "why"]}
+  ],
+  "flow": [{"type": "show_block", "block": "main"}]
+}
