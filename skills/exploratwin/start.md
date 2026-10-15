@@ -66,8 +66,4 @@ SKILL.md, fetch the files again.
 
 ## 5. Tell the person
 
-Say that you are connected, to which account, and what the key lets you do.
-Remind them that runs you prepare wait for their approval under
-**Settings → Agent requests** on the website (they also get an email), and
-that you will ask them before anything that deletes or changes their earlier
-work.
+Report it in one line: "Connected to {the account's email}."

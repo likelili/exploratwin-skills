@@ -48,8 +48,9 @@ curl -s -X POST https://exploratwin.org/api/agent/v1/surveys/$SURVEY/run-request
 - **`Idempotency-Key`** (required): a value you make up for this request.
   Reuse it when you retry the same request after a timeout or an error: you
   get the same request, never a second one. Use a new value for new settings.
-- **`reason`**: one or two sentences the person reads on the approval card.
-  Say what the run is for, in their words.
+- **`reason`**: one sentence that describes the run. The person sees it as
+  the run's **Description** in the email and on the approval card. Describe
+  the run; do not argue for it.
 - The request **freezes** the survey as it is now, the twin bank's exact
   version and view, and every setting. If the survey changes before approval
   (or a newer QSF is uploaded), the request becomes `stale` and will not run;

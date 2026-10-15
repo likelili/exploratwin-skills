@@ -2,12 +2,12 @@
 name: exploratwin
 description: Work on ExploraTwin (exploratwin.org) for the person you assist - build surveys in its standard format or upload Qualtrics QSF files, check and preview them, count digital twins, estimate costs, prepare survey runs for the person's approval, and download results. Use when the person asks to create, test or run a survey on digital twins or AI participants, to pilot a questionnaire, a conjoint or a MaxDiff study, or to fetch ExploraTwin results.
 metadata:
-  version: "1.0.0"
+  version: "1.0.1"
 ---
 
 # ExploraTwin
 
-Skill version **1.0.0**. ExploraTwin runs surveys on digital twins: AI
+Skill version **1.0.1**. ExploraTwin runs surveys on digital twins: AI
 participants built from real people's survey answers. You work for one person,
 with the API key they made, and everything you do is done as them.
 
@@ -87,15 +87,16 @@ uploads are multipart. The full contract is [api.md](references/api.md).
 5. **Count and estimate**: `POST /twins/count` for the population;
    `POST /surveys/{id}/estimate` for the settings you plan.
 6. **Prepare the run**: `POST /surveys/{id}/run-requests` with the settings, a
-   one-sentence `reason`, and an `Idempotency-Key` header (a value you make up
-   for this request and reuse if you retry it). See [runs.md](references/runs.md).
-7. **Stop and report** to the person:
-   - the survey (title, number of questions), the twins (how many, which
-     kind, filters), the model and other settings;
-   - the estimate, and that the charge follows actual use;
-   - pictures the model cannot load, if the request lists any;
-   - the `approve_url`, and that the run starts only when they approve it
-     there (they also get an email).
+   `reason` (one sentence that describes the run; the person sees it as its
+   Description), and an `Idempotency-Key` header (a value you make up for this
+   request and reuse if you retry it). See [runs.md](references/runs.md).
+7. **Stop and report** the status and the next action, as plain facts:
+
+   > Prepared "{survey title}" with {count} twins. Estimated cost: {estimate}.
+   > Review and approve the run: {approve_url}
+
+   Add a line only when it applies: pictures the model cannot load (the
+   request lists them), or the defaults you chose (see "Before you build").
 8. **After approval**: `GET /requests/{id}` gives the `run_id`; follow
    `GET /runs/{id}` with backoff (every 30 seconds at first, then every few
    minutes; a Batch run can take up to 24 hours). Do not poll faster.

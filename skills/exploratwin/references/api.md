@@ -40,7 +40,7 @@ Version 1. Base address: `https://exploratwin.org/api/agent/v1`.
   "key": {"name": "Claude Code on my laptop", "capabilities": ["surveys:read", "..."], "expires_at": "2027-01-11T..."},
   "credits": {"available_usd": "$24.10", "used_this_month_usd": "$5.90", "resets_at": "...", "runs_stop_when_used_up": true},
   "api_version": "1",
-  "skill_version": "1.0.0",
+  "skill_version": "1.0.1",
   "skill_url": "https://exploratwin.org/agent/SKILL.md"
 }
 ```

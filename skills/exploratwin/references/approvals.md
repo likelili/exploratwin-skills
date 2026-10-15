@@ -12,15 +12,14 @@ person for their password or to share their session.
 
 When the person asked you to build a survey and set up a run, that is enough
 to prepare the request. Do not ask "shall I submit?" first: the approval on
-the website is the yes. After you prepare it, tell them:
+the website is the yes. After you prepare it, report the status and the next
+action, as plain facts:
 
-- what will run: the survey (title, questions), the twins (how many, which
-  type, filters or bank), the model, Batch, report, seed;
-- the estimate (and that the charge follows actual use);
-- pictures the model cannot load, if listed;
-- the `approve_url`.
+> Prepared "{survey title}" with {count} twins. Estimated cost: {estimate}.
+> Review and approve the run: {approve_url}
 
-Then stop. Do not prepare the same run again while one waits.
+Add a line only when the request lists pictures the model cannot load, or
+when you chose defaults for the person. Then stop. Do not prepare the same run again while one waits.
 
 **When the person approves**, the website checks everything again:
 
