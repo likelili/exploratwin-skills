@@ -1,12 +1,10 @@
 # ExploraTwin skills for AI agents
 
-Let your own AI agent (Claude Code, Codex, Cursor and others) work on
-[ExploraTwin](https://exploratwin.org) for you. It can build surveys or upload
-Qualtrics files, check and preview them, estimate costs, prepare runs on
-digital twins, and download the results.
-
-**Your agent never starts a run on its own.** Each run it prepares waits on the
-website until you approve it.
+Your AI agent (Claude Code, Codex, Cursor and others) works on
+[ExploraTwin](https://exploratwin.org) through your account. It builds surveys
+or uploads Qualtrics files, checks and previews them, estimates costs, prepares
+runs on digital twins, and downloads the results. Review and approve prepared
+runs under **Settings → Agent requests** to start them.
 
 ## The quickest way
 
@@ -16,8 +14,7 @@ website until you approve it.
 
    > Fetch https://exploratwin.org/agent/start.md and follow it to connect to ExploraTwin for me.
 
-The agent reads the instructions, asks you for the key, and checks it. Nothing
-else to install.
+The agent reads the instructions, asks you for the key, and checks it.
 
 ## Installing the skill
 
@@ -40,12 +37,13 @@ If your agent keeps skills as folders, install `skills/exploratwin` once:
 
 | | |
 |---|---|
-| **Goes ahead when you ask** | Build and change surveys; upload pictures and QSF files; check and preview surveys; count twins; estimate costs; prepare runs (they wait for your approval); read results |
-| **Asks you first, and waits for a clear yes** | Deleting anything; repairing or rerunning answers; panels; uploading your own data, such as a twin bank |
-| **Never** | Approves, starts or declines a run; asks for your password; sends your key anywhere but exploratwin.org |
+| **When you ask** | Build and change surveys; upload pictures and QSF files; check and preview surveys; count twins; estimate costs; prepare runs; read results |
+| **After you say yes in the conversation** | Deleting anything; repairing or rerunning answers; panels; uploading your own data, such as a twin bank |
+| **Not available to agents** | Approving, starting or declining a run; signing in with your password; sending your key anywhere but exploratwin.org |
 
-Runs you approve are charged as any run on the website. The agent shows you
-the estimate and the approval link before anything runs.
+After preparing a run, the agent reports the survey, the number of twins, the
+estimate and the approval link. Approved runs are charged like any run on the
+website.
 
 ## What is in the skill
 
@@ -63,8 +61,8 @@ the estimate and the approval link before anything runs.
 
 ## Keys and privacy
 
-- A key belongs to your account and acts as you, within what you allowed when
-  you made it. Revoke it on the website at any time.
+- A key acts as your account, limited to the capabilities chosen when it was
+  made. Revoke it under **Settings → Connect an agent**.
 - The skill tells your agent to keep the key in an environment variable or a
   private file, never in a project folder or a repository.
 - Whatever your agent receives with the key (your surveys, settings and
