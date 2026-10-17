@@ -28,7 +28,9 @@ Version 1. Base address: `https://exploratwin.org/api/agent/v1`.
 - **Paging.** Lists take `limit` (at most 100) and return `next_cursor`; pass it
   back as `cursor` for the next page. `null` means the last page.
 - **Free actions.** Reads, checks, previews, counts and estimates never call a
-  paid model. Only an approved run costs credits.
+  paid model. Only an approved run or persona bank costs credits, with two
+  small exceptions: the persona generator's plan and preview (about $0.01
+  each) are charged when you call them.
 
 ## Account and options
 
@@ -40,7 +42,7 @@ Version 1. Base address: `https://exploratwin.org/api/agent/v1`.
   "key": {"name": "Claude Code on my laptop", "capabilities": ["surveys:read", "..."], "expires_at": "2027-01-11T..."},
   "credits": {"available_usd": "$24.10", "used_this_month_usd": "$5.90", "resets_at": "...", "runs_stop_when_used_up": true},
   "api_version": "1",
-  "skill_version": "1.0.1",
+  "skill_version": "1.1.0",
   "skill_url": "https://exploratwin.org/agent/SKILL.md"
 }
 ```
@@ -224,7 +226,8 @@ time (`429 too_many_waiting`).
 
 ### `GET /requests` (`runs:request`)
 
-`?status=pending,stale&limit=&cursor=`. The account's requests, newest first.
+`?status=pending,stale&limit=&cursor=`. The account's requests, newest first:
+runs (`kind: "run"`) and persona banks (`kind: "persona_bank"`).
 
 ### `GET /requests/{id}` (`runs:request`)
 
@@ -243,6 +246,77 @@ One request. `status`:
 ### `POST /requests/{id}/withdraw` (`runs:request`)
 
 Withdraw a `pending` or `stale` request.
+
+## The persona generator
+
+Synthetic profiles saved as the person's private persona bank. The workflow,
+the plan's format and its rules: [persona-generator.md](persona-generator.md).
+
+### `GET /persona-generator/options` (any capability)
+
+`available` (open to this account), `census_ready`, `census` (`source`,
+`country`, `released`, `sample_records`), `demographic_fields` (each `id`,
+`label`, `values`), `standard_characteristics`, `limits` (`profiles` with
+`min`, `max`, `default`; `examples`, `profiles_per_example`, `groups`,
+`characteristics`, `characteristics_asked`, `values_per_characteristic`,
+`audience_chars`, `preview_profiles`), `costs` (`plan_usd`,
+`per_profile_usd`, `note`) and `guide`. Dollar amounts are decimal text, as in
+every estimate.
+
+### `POST /persona-generator/plan` (`runs:request`, charged: about $0.01)
+
+```json
+{"audience": "US adults who used an AI chatbot in the past month.",
+ "examples": [], "profiles_per_example": 1,
+ "characteristics": [{"name": "Occupation", "values": []}]}
+```
+
+The AI's plan. Answer: `plan`, `problems`, `notes`, `profiles`,
+`matching_sample_records`, `group_matching_records`, `group_profiles`,
+`warnings`, `estimate` (`estimated_charge_usd`, `estimated_charge_nanos_usd`,
+`estimated_provider_cost_usd`, `people`: the bank's cost).
+
+### `POST /persona-generator/plan/check` (`runs:request`, free)
+
+`{"plan": {...}, "profiles": 200}`. The plan cleaned and checked, with the
+same answer as above. `profiles` is for a described audience; an example
+plan counts its own.
+
+### `POST /persona-generator/preview` (`runs:request`, charged: about $0.01)
+
+`{"plan": {...}, "profiles": 200, "seed": 3}`. Up to five profiles written as
+the bank's would be (never more than `profiles`), drawn separately from the
+bank. Answer: `seed`, `profiles` (each `profile_id`, `name`, `group`,
+`facts`, `description`, `text`: what a twin's model reads), `warnings`. A plan
+with problems: `422 plan_has_problems`.
+
+### `POST /persona-generator/requests` (`runs:request`, free)
+
+Header `Idempotency-Key` (required). Body:
+
+```json
+{"plan": {...}, "profiles": 200, "seed": 7, "name": "AI chatbot users",
+ "reason": "Profiles for the AI subscription survey pilot."}
+```
+
+Answer (`201`): the request, `kind: "persona_bank"`:
+
+```json
+{"id": "5d2...", "kind": "persona_bank", "status": "pending",
+ "bank": {"name": "AI chatbot users", "profiles": 200, "seed": 7, "start": "description", "audience": "...",
+          "criteria": {"age_min": 18, "age_max": 64}, "groups": [{"name": "...", "share": 0.4}],
+          "characteristics": ["Occupation", "..."], "names": false},
+ "estimate": {...}, "reason": "...", "created_at": "...", "expires_at": "...", "decided_at": null,
+ "generation_id": null, "bank_id": null, "outcome": {},
+ "approve_url": "https://exploratwin.org/?agent_request=5d2..."}
+```
+
+It waits for the person, like a run request (`GET /requests/{id}`, the same
+statuses, `POST /requests/{id}/withdraw`). While the bank is created
+(`executing`), `progress` gives `status`, `done` and `total`. `succeeded`
+sets `bank_id` (and `outcome.version_id`); `failed` sets `outcome.message`. A
+request whose bank could not start goes back to `pending`, with
+`outcome.message`.
 
 ## Runs and results
 
@@ -273,9 +347,9 @@ answer with a redirect to a signed link, so follow redirects (`curl -L`). Files:
 ## Not in this API
 
 Approving or declining requests, making or revoking keys, account and billing
-settings, starting a run directly, deleting anything, repairs and reruns,
-panels and live Twin Meet calls, uploading twin banks, and the website's own AI
-survey writer. The person does these on the website.
+settings, starting a run or creating a bank directly, deleting anything,
+repairs and reruns, panels and live Twin Meet calls, uploading twin banks, and
+the website's own AI survey writer. The person does these on the website.
 
 ## Examples
 

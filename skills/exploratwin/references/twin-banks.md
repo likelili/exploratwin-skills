@@ -25,6 +25,15 @@ on one, set `twin_bank` in the run settings:
 Count with `POST /twins/count` and the same `twin_bank`. Installing a bank from
 the store is done by the person on the website.
 
+## Synthetic profiles
+
+The persona generator makes a private bank of synthetic profiles of US
+adults, from a description of the audience: demographics from real census
+records, other characteristics by the plan's proportions, and a written
+description of each profile. You prepare it as a request the person approves;
+the finished bank is listed in `twin_banks` like any other. See
+[persona-generator.md](persona-generator.md).
+
 ## The person's own data
 
 A person can turn their own individual-level data (customer records, a survey

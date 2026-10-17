@@ -52,6 +52,7 @@ folder named `exploratwin`, keeping their paths:
 - https://exploratwin.org/agent/references/runs.md
 - https://exploratwin.org/agent/references/results.md
 - https://exploratwin.org/agent/references/twin-banks.md
+- https://exploratwin.org/agent/references/persona-generator.md
 - https://exploratwin.org/agent/references/approvals.md
 - https://exploratwin.org/agent/references/troubleshooting.md
 - https://exploratwin.org/agent/examples/plain-survey.json

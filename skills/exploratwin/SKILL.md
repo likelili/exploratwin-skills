@@ -1,13 +1,13 @@
 ---
 name: exploratwin
-description: Work on ExploraTwin (exploratwin.org) for the person you assist - build surveys in its standard format or upload Qualtrics QSF files, check and preview them, count digital twins, estimate costs, prepare survey runs for the person's approval, and download results. Use when the person asks to create, test or run a survey on digital twins or AI participants, to pilot a questionnaire, a conjoint or a MaxDiff study, or to fetch ExploraTwin results.
+description: Work on ExploraTwin (exploratwin.org) for the person you assist - build surveys in its standard format or upload Qualtrics QSF files, check and preview them, count digital twins, estimate costs, prepare survey runs for the person's approval, make synthetic persona banks, and download results. Use when the person asks to create, test or run a survey on digital twins or AI participants, to pilot a questionnaire, a conjoint or a MaxDiff study, to generate synthetic profiles of an audience, or to fetch ExploraTwin results.
 metadata:
-  version: "1.0.1"
+  version: "1.1.0"
 ---
 
 # ExploraTwin
 
-Skill version **1.0.1**. ExploraTwin runs surveys on digital twins: AI
+Skill version **1.1.0**. ExploraTwin runs surveys on digital twins: AI
 participants built from real people's survey answers. You work for one person,
 with the API key they made, and everything you do is done as them.
 
@@ -20,6 +20,9 @@ Not connected yet? Follow [start.md](start.md) first.
 - build surveys, change them, upload pictures and Qualtrics (QSF) files;
 - check and preview surveys, count twins, estimate costs;
 - prepare a run request (it waits for the person; see below);
+- with the persona generator, make a plan and a preview (small charges,
+  about $0.01 each) and prepare a persona bank request (it waits for the
+  person); see [persona-generator.md](references/persona-generator.md);
 - read run status and download results.
 
 An instruction to build a survey and set up a run is enough to prepare the
@@ -38,8 +41,9 @@ tell them where to do it on the website.)
 
 **Never:**
 
-- try to approve, start or decline a run yourself. Only the person approves,
-  signed in on the website. There is no API for it, and no workaround;
+- try to approve, start or decline a run or a bank yourself. Only the person
+  approves, signed in on the website. There is no API for it, and no
+  workaround;
 - ask for the person's password, or sign in to the website as them;
 - send the key anywhere but `https://exploratwin.org`, or write it into a file
   that could be shared (a project folder, a repository, a notebook, a log);
@@ -108,6 +112,12 @@ A request that is `stale` (the survey changed), `expired` (7 days passed),
 `declined` or `withdrawn` will not run. Prepare a new one only if the person
 still wants the run.
 
+**Synthetic profiles instead of the built-in twins.** When the person wants
+twins of an audience the built-in twins do not cover, make a persona bank
+first ([persona-generator.md](references/persona-generator.md)): plan,
+preview, prepare the bank request, and stop. After the person approves it and
+the bank is created, run the survey on it with `twin_bank` (step 6).
+
 ## Good practice
 
 - One project per survey. A project holds either a builder survey or a QSF.
@@ -130,6 +140,7 @@ still wants the run.
 - [approvals.md](references/approvals.md): what waits for the person, and what to ask first
 - [results.md](references/results.md): run status and result files
 - [twin-banks.md](references/twin-banks.md): built-in twins, twin banks and the person's own data
+- [persona-generator.md](references/persona-generator.md): synthetic profiles saved as a private persona bank
 - [troubleshooting.md](references/troubleshooting.md): errors and what to do
 
 Example surveys (each passes the server's checks):

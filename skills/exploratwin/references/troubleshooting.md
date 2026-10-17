@@ -57,6 +57,21 @@ on the website (Support).
 | `request_not_found` | 404 | No such request on this account. |
 | `request_stale`, `request_declined`, `request_withdrawn`, `request_expired`, `request_executing`, `request_succeeded`, `request_failed` | 409 | The request is no longer waiting, so it cannot be withdrawn. Read it with `GET /requests/{id}`. |
 
+## The persona generator
+
+| Code | Status | What to do |
+|---|---|---|
+| `persona_generator_closed` | 403 | The generator is not open to this account (admins and beta testers have it). Tell the person; they can ask ExploraTwin for access. |
+| `census_not_installed` | 503 | The census data is not on the server yet. Try again later; tell the person if it lasts. |
+| `plan_has_problems` | 422 | The plan breaks a rule; `problems` lists each. Fix them and check with `POST /persona-generator/plan/check`. |
+| `generator_refused` | 400 | The generator cannot do this as asked (for example, more profiles than the matching records can make different). Change the plan or the number as the message says. |
+| `generation_running` | 409 | A bank is already being created for this account. Wait until it is done. |
+| `insufficient_credits` | 402 | Not enough credits for the plan or the preview. Tell the person. |
+
+A bank request that is `pending` again after an approval, with
+`outcome.message`, could not start its bank (for example the server
+restarted). It waits for the person again, so tell them the message.
+
 A request's own `status` tells you what happened to it: see the table in
 [api.md](api.md). A `failed` request's run ended in failure. A request that is
 `pending` again after an approval, with `outcome.error` and `outcome.message`,

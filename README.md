@@ -3,8 +3,9 @@
 Your AI agent (Claude Code, Codex, Cursor and others) works on
 [ExploraTwin](https://exploratwin.org) through your account. It builds surveys
 or uploads Qualtrics files, checks and previews them, estimates costs, prepares
-runs on digital twins, and downloads the results. Review and approve prepared
-runs under **Settings → Agent requests** to start them.
+runs on digital twins, makes persona banks of synthetic profiles, and downloads
+the results. Review and approve prepared runs and banks under
+**Settings → Agent requests** to start them.
 
 ## The quickest way
 
@@ -37,13 +38,14 @@ If your agent keeps skills as folders, install `skills/exploratwin` once:
 
 | | |
 |---|---|
-| **When you ask** | Build and change surveys; upload pictures and QSF files; check and preview surveys; count twins; estimate costs; prepare runs; read results |
+| **When you ask** | Build and change surveys; upload pictures and QSF files; check and preview surveys; count twins; estimate costs; prepare runs and persona banks; make persona generator plans and previews (charged directly, about $0.01 each); read results |
 | **After you say yes in the conversation** | Deleting anything; repairing or rerunning answers; panels; uploading your own data, such as a twin bank |
-| **Not available to agents** | Approving, starting or declining a run; signing in with your password; sending your key anywhere but exploratwin.org |
+| **Not available to agents** | Approving, starting or declining a run or a bank; signing in with your password; sending your key anywhere but exploratwin.org |
 
 After preparing a run, the agent reports the survey, the number of twins, the
-estimate and the approval link. Approved runs are charged like any run on the
-website.
+estimate and the approval link; for a persona bank, its name, the number of
+profiles, the estimate and the link. Approved runs and banks are charged as on
+the website.
 
 ## What is in the skill
 
@@ -56,6 +58,7 @@ website.
 | `references/qsf.md` | Qualtrics files |
 | `references/runs.md`, `approvals.md`, `results.md` | Run settings, approvals and result files |
 | `references/twin-banks.md` | Built-in twins, twin banks and your own data |
+| `references/persona-generator.md` | The persona generator: synthetic profiles saved as a private persona bank |
 | `references/troubleshooting.md` | Error codes and what to do |
 | `examples/` | Five example surveys: a plain survey, logic and a loop, a conjoint, an adaptive conjoint, a MaxDiff |
 
@@ -70,7 +73,7 @@ website.
 
 ## Versions
 
-The skill's version is in `SKILL.md` (1.0.1). The same files are served at
+The skill's version is in `SKILL.md` (1.1.0). The same files are served at
 [exploratwin.org/agent](https://exploratwin.org/agent/start.md), and
 `GET /api/agent/v1/me` reports the current `skill_version`. When it changes,
 the skill tells your agent to fetch the files again. Releases here follow the
