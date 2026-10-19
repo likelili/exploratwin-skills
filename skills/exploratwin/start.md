@@ -12,7 +12,7 @@ Do these steps once.
 ## 1. Ask for the key
 
 Ask the person for their ExploraTwin API key. They make one on
-https://exploratwin.org under **Settings → Connect an agent**; it starts with
+https://exploratwin.org under **Connect an agent**, at the top right of the page; it starts with
 `etw_`. Never ask for their password: the key is the only sign-in you use.
 
 ## 2. Keep the key safe

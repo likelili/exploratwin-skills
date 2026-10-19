@@ -11,7 +11,7 @@ on the website (Support).
 |---|---|---|
 | `key_required` | 401 | Send `Authorization: Bearer etw_...`. A website session or anything else is not accepted. |
 | `key_invalid` | 401 | The key is wrong or cut short. Ask the person to check it, or to make a new one. |
-| `key_revoked`, `key_expired` | 401 | Ask the person for a new key (Settings → Connect an agent). Stop until you have it. |
+| `key_revoked`, `key_expired` | 401 | Ask the person for a new key (Connect an agent, at the top right of the website). Stop until you have it. |
 | `account_not_active` | 403 | The account is not approved or active. The person sorts this out on the website. |
 | `agent_access_closed` | 403 | Agent access is not open to this account yet. Nothing to do but wait. |
 | `capability_missing` | 403 | The key may not do this. The person can make a key with that capability. |

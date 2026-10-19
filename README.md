@@ -5,12 +5,12 @@ Your AI agent (Claude Code, Codex, Cursor and others) works on
 or uploads Qualtrics files, checks and previews them, estimates costs, prepares
 runs on digital twins, makes persona banks of synthetic profiles, and downloads
 the results. Review and approve prepared runs and banks under
-**Settings → Agent requests** to start them.
+**Agent requests**, at the top right of the website, to start them.
 
 ## The quickest way
 
-1. On [exploratwin.org](https://exploratwin.org), open **Settings → Connect an
-   agent** and make a key. Agent access must be open to your account.
+1. On [exploratwin.org](https://exploratwin.org), click **Connect an agent** at
+   the top right and make a key. Agent access must be open to your account.
 2. Paste this line into your agent:
 
    > Fetch https://exploratwin.org/agent/start.md and follow it to connect to ExploraTwin for me.
@@ -65,7 +65,7 @@ the website.
 ## Keys and privacy
 
 - A key acts as your account, limited to the capabilities chosen when it was
-  made. Revoke it under **Settings → Connect an agent**.
+  made. Revoke it under **Connect an agent**.
 - The skill tells your agent to keep the key in an environment variable or a
   private file, never in a project folder or a repository.
 - Whatever your agent receives with the key (your surveys, settings and
@@ -73,7 +73,7 @@ the website.
 
 ## Versions
 
-The skill's version is in `SKILL.md` (1.1.0). The same files are served at
+The skill's version is in `SKILL.md` (1.1.1). The same files are served at
 [exploratwin.org/agent](https://exploratwin.org/agent/start.md), and
 `GET /api/agent/v1/me` reports the current `skill_version`. When it changes,
 the skill tells your agent to fetch the files again. Releases here follow the
@@ -81,7 +81,9 @@ website.
 
 ## Help
 
-[exploratwin.org/support](https://exploratwin.org/support)
+- [Connect an AI agent](https://exploratwin.org/support/connect-an-agent):
+  connecting, what your agent can do, and when it asks for your approval.
+- More guides: [exploratwin.org/support](https://exploratwin.org/support)
 
 ## License
 

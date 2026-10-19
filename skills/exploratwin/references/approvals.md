@@ -6,7 +6,7 @@ You act for the person, with their key. Two kinds of consent apply.
 
 You never start a run. You prepare a run request; it waits on the website, and
 the person approves or declines it there, signed in, under
-**Settings → Agent requests** (they also get an email with a link). There is no
+**Agent requests**, at the top right of the page (they also get an email with a link). There is no
 API to approve, and no other way: do not look for one, and do not ask the
 person for their password or to share their session.
 
