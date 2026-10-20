@@ -119,8 +119,10 @@ project with no survey yet). Otherwise `409 revision_conflict` with
 `current_revision`: read the survey again and reapply your change. Each save
 raises the revision by one and keeps the earlier version. Answer:
 `{"revision": 4, "problems": [...], "warnings": [...]}`. Refused for a QSF
-project (`409 project_holds_qsf`) and for a project whose survey was made in
-the website's earlier builder (`409 project_holds_earlier_survey`).
+project (`409 project_holds_qsf`), for a project whose survey was made in
+the website's earlier builder (`409 project_holds_earlier_survey`), and for a
+project that ran (`409 project_already_ran`: its results stay with the survey
+they came from; save the changed survey in a new project).
 
 The server tidies a survey as it saves it (the format version it needs, and
 settings that no longer choose anything), so read it back before your next
@@ -222,7 +224,9 @@ the twin bank's exact version and view, and every setting; the run will use
 exactly these. Sending the same
 `Idempotency-Key` with the same body returns the same request; with a
 different body, `409 idempotency_key_reused`. At most 20 requests wait at a
-time (`429 too_many_waiting`).
+time (`429 too_many_waiting`). A project runs once: a request for a project
+that already ran is refused (`409 project_already_ran`); save the survey in a
+new project and prepare the run there.
 
 ### `GET /requests` (`runs:request`)
 
@@ -236,7 +240,7 @@ One request. `status`:
 | Status | Meaning |
 |---|---|
 | `pending` | Waiting for the person |
-| `stale` | The survey changed (or a newer QSF was uploaded) after the request was made; it will not run |
+| `stale` | The survey changed (or a newer QSF was uploaded) after the request was made, or the project ran from another request (`outcome.stale_reason: "project_ran"`); it will not run |
 | `declined` | The person said no |
 | `withdrawn` | You withdrew it, or the key was revoked |
 | `expired` | Not decided within 7 days |

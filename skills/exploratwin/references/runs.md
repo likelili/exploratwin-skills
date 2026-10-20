@@ -54,7 +54,11 @@ curl -s -X POST https://exploratwin.org/api/agent/v1/surveys/$SURVEY/run-request
 - The request **freezes** the survey as it is now, the twin bank's exact
   version and view, and every setting. If the survey changes before approval
   (or a newer QSF is uploaded), the request becomes `stale` and will not run;
-  prepare a new one.
+  prepare a new one. It also becomes `stale` when another request of the
+  project runs first: a project runs once.
+- **One run per project.** A project that ran is refused new requests
+  (`409 project_already_ran`). To run the survey again (other settings, more
+  twins, another model), save it in a new project and prepare the run there.
 - At most 20 requests wait at a time; each waits up to 7 days.
 
 The answer includes `approve_url`, the `estimate`, and

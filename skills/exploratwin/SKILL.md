@@ -2,12 +2,12 @@
 name: exploratwin
 description: Work on ExploraTwin (exploratwin.org) for the person you assist - build surveys in its standard format or upload Qualtrics QSF files, check and preview them, count digital twins, estimate costs, prepare survey runs for the person's approval, make synthetic persona banks, and download results. Use when the person asks to create, test or run a survey on digital twins or AI participants, to pilot a questionnaire, a conjoint or a MaxDiff study, to generate synthetic profiles of an audience, or to fetch ExploraTwin results.
 metadata:
-  version: "1.1.1"
+  version: "1.1.2"
 ---
 
 # ExploraTwin
 
-Skill version **1.1.1**. ExploraTwin runs surveys on digital twins: AI
+Skill version **1.1.2**. ExploraTwin runs surveys on digital twins: AI
 participants built from real people's survey answers. You work for one person,
 with the API key they made, and everything you do is done as them.
 
@@ -78,7 +78,9 @@ uploads are multipart. The full contract is [api.md](references/api.md).
      and save with `PUT /surveys/{id}/definition` and the `expected_revision`
      you read. A `409 revision_conflict` means the person (or another agent)
      changed it meanwhile: read it again and reapply your change. Never
-     overwrite their edit;
+     overwrite their edit. Before a project runs, when the person asks you to
+     change its survey or settings, ask whether to change this project or
+     make a new one;
    - **or upload a QSF**: `POST /surveys` (a title only), then
      `POST /surveys/{id}/qsf`. See [qsf.md](references/qsf.md).
 
@@ -108,9 +110,15 @@ uploads are multipart. The full contract is [api.md](references/api.md).
    [results.md](references/results.md). Save files on the person's computer;
    in the conversation, report summaries, not participants' rows.
 
-A request that is `stale` (the survey changed), `expired` (7 days passed),
-`declined` or `withdrawn` will not run. Prepare a new one only if the person
-still wants the run.
+A request that is `stale` (the survey changed, or the project ran from another
+request), `expired` (7 days passed), `declined` or `withdrawn` will not run.
+Prepare a new one only if the person still wants the run.
+
+**One run per project.** A project that ran keeps the survey and settings its
+results came from. For another run (new settings, more twins, another model)
+or a changed survey, save the survey in a new project (`POST /surveys`, with
+the definition read from the old one) and work there; the old project answers
+`409 project_already_ran`.
 
 **Synthetic profiles instead of the built-in twins.** When the person wants
 twins of an audience the built-in twins do not cover, make a persona bank
@@ -120,7 +128,8 @@ the bank is created, run the survey on it with `twin_bank` (step 6).
 
 ## Good practice
 
-- One project per survey. A project holds either a builder survey or a QSF.
+- One project per survey, and one run per project. A project holds either a
+  builder survey or a QSF.
 - Check before you save, and preview before you request a run.
 - Keep a survey's IDs stable when you edit it: answers are recorded by them.
 - Write question text the way it should reach a respondent. Twins read every

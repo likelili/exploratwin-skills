@@ -28,6 +28,7 @@ on the website (Support).
 | `invalid_request` | 422 | The call's fields are wrong; `problems` names each. Fix them (see [api.md](api.md)). |
 | `revision_conflict` | 409 | The survey changed since you read it. Read it again, reapply your change, save with the new revision. Never save over the newer version. |
 | `project_holds_qsf`, `project_holds_builder_survey` | 409 | A project holds one kind of survey. Make a new project. |
+| `project_already_ran` | 409 | The project ran, and its results stay with its survey. Read its survey (`GET /surveys/{id}/definition`), save it in a new project (`POST /surveys`), and change it or prepare the run there. |
 | `project_holds_earlier_survey` | 409 | The project's survey was made in the website's earlier builder; saving would replace it. Make a new project. |
 | `survey_not_in_format` | 422 | The JSON is too far from the standard format to be read; `problems` say where. Compare it with the schema. |
 | `no_survey` | 409 | The project has no survey yet. Save one or upload a QSF. |

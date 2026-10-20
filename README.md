@@ -81,7 +81,7 @@ website.
 
 ## Help
 
-- [Connect an AI agent](https://exploratwin.org/support/connect-an-agent):
+- [Connect an AI agent to ExploraTwin](https://exploratwin.org/support/connect-an-agent):
   connecting, what your agent can do, and when it asks for your approval.
 - More guides: [exploratwin.org/support](https://exploratwin.org/support)
 
