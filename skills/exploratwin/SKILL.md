@@ -2,12 +2,12 @@
 name: exploratwin
 description: Work on ExploraTwin (exploratwin.org) for the person you assist - build surveys in its standard format or upload Qualtrics QSF files, check and preview them, count digital twins, estimate costs, prepare survey runs for the person's approval, make synthetic persona banks, and download results. Use when the person asks to create, test or run a survey on digital twins or AI participants, to pilot a questionnaire, a conjoint or a MaxDiff study, to generate synthetic profiles of an audience, or to fetch ExploraTwin results.
 metadata:
-  version: "1.1.2"
+  version: "1.2.0"
 ---
 
 # ExploraTwin
 
-Skill version **1.1.2**. ExploraTwin runs surveys on digital twins: AI
+Skill version **1.2.0**. ExploraTwin runs surveys on digital twins: AI
 participants built from real people's survey answers. You work for one person,
 with the API key they made, and everything you do is done as them.
 
@@ -86,6 +86,12 @@ uploads are multipart. The full contract is [api.md](references/api.md).
 
    Pictures: upload each with `POST /surveys/{id}/images` and use the
    `upload:<id>` source it returns. A web link (`https://...`) works too.
+
+   To convert a questionnaire from another tool or a document (Word, PDF,
+   SurveyMonkey, Google Forms, REDCap, ...), use the survey-format skill:
+   https://exploratwin.org/skills/survey-format/SKILL.md (its codebook, its
+   conversion guide and worked conversions). Then check and save the result
+   as above.
 4. **Preview**: `POST /surveys/{id}/preview` shows what a sample twin reads
    (for a survey that runs in stages, its first stage). For a conjoint or a
    MaxDiff block, `POST /surveys/{id}/experiment-preview` shows sample tasks.
@@ -144,6 +150,8 @@ the bank is created, run the survey on it with `twin_bank` (step 6).
 - [api.md](references/api.md): every action, its inputs, answers and errors
 - [survey-format.md](references/survey-format.md) and
   [survey-format.schema.json](references/survey-format.schema.json): the survey format
+- the survey-format skill, https://exploratwin.org/skills/survey-format/SKILL.md:
+  the full codebook, and converting surveys from other tools and documents
 - [qsf.md](references/qsf.md): Qualtrics files
 - [runs.md](references/runs.md): run settings, estimates and requests
 - [approvals.md](references/approvals.md): what waits for the person, and what to ask first

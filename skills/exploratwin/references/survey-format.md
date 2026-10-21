@@ -12,6 +12,10 @@ definition is [survey-format.schema.json](survey-format.schema.json) (also
 `GET /survey-format`). It checks structure only: `POST /survey-check` runs every
 check, and its answer is what counts.
 
+The full codebook (every field, how a twin reads it, common mistakes) and the
+guide to converting surveys from other tools and documents are in the
+survey-format skill: https://exploratwin.org/skills/survey-format/SKILL.md.
+
 Worked examples, each passing the server's checks:
 [plain-survey.json](../examples/plain-survey.json),
 [logic-and-loop.json](../examples/logic-and-loop.json),

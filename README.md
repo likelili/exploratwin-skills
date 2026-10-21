@@ -99,7 +99,7 @@ cp -R exploratwin-skills/skills/survey-format ~/.claude/skills/
 
 ## Versions
 
-The skill's version is in `SKILL.md` (1.1.2). The same files are served at
+The skill's version is in `SKILL.md` (1.2.0). The same files are served at
 [exploratwin.org/agent](https://exploratwin.org/agent/start.md), and
 `GET /api/agent/v1/me` reports the current `skill_version`. When it changes,
 the skill tells your agent to fetch the files again. Releases here follow the
