@@ -1,0 +1,95 @@
+{
+  "schema_version": "0.1",
+  "id": "wellbeing",
+  "title": "wellbeing",
+  "questions": [
+    {"id": "consent_header", "content": [{"type": "text", "text": "Welcome. This survey asks about your sleep and stress over the past week."}]},
+    {
+      "id": "consent",
+      "content": [{"type": "text", "text": "Do you agree to take part in this survey?"}],
+      "response": {"type": "choice", "mode": "single", "required": true, "options": [
+        {"id": "1", "label": "Yes", "code": 1},
+        {"id": "0", "label": "No", "code": 0}
+      ]}
+    },
+    {
+      "id": "age",
+      "show_if": {"op": "selected", "question": "consent", "option": "1"},
+      "content": [{"type": "text", "text": "What is your age in years?"}],
+      "response": {"type": "text", "format": "number", "number": {"min": 18, "max": 99, "decimals": 0}, "required": true},
+      "presentation": {"control": "single_line"}
+    },
+    {
+      "id": "gender",
+      "show_if": {"op": "selected", "question": "consent", "option": "1"},
+      "content": [{"type": "text", "text": "What is your gender?"}],
+      "response": {"type": "choice", "mode": "single", "options": [
+        {"id": "1", "label": "Woman", "code": 1},
+        {"id": "2", "label": "Man", "code": 2},
+        {"id": "3", "label": "Non-binary", "code": 3},
+        {"id": "4", "label": "Prefer not to say", "code": 4}
+      ]}
+    },
+    {"id": "sleep_header", "show_if": {"op": "selected", "question": "consent", "option": "1"}, "content": [{"type": "text", "text": "Sleep"}]},
+    {
+      "id": "rested",
+      "show_if": {"op": "selected", "question": "consent", "option": "1"},
+      "content": [
+        {"type": "text", "text": "How rested do you feel today?"},
+        {"type": "text", "text": "Not at all | Somewhat | Completely"}
+      ],
+      "response": {"type": "number", "min": 0, "max": 100, "step": 1},
+      "presentation": {"control": "slider"}
+    },
+    {
+      "id": "stress",
+      "show_if": {"op": "selected", "question": "consent", "option": "1"},
+      "content": [{"type": "text", "text": "In the past week, how often did each of these cause you stress?"}],
+      "response": {
+        "type": "matrix", "mode": "per_row",
+        "rows": [
+          {"id": "work", "label": "Work or school"},
+          {"id": "money", "label": "Money"},
+          {"id": "health", "label": "Health"}
+        ],
+        "row_response": {"type": "choice", "mode": "single", "options": [
+          {"id": "1", "label": "Never", "code": 1},
+          {"id": "2", "label": "Sometimes", "code": 2},
+          {"id": "3", "label": "Often", "code": 3},
+          {"id": "4", "label": "Always", "code": 4}
+        ]}
+      }
+    },
+    {
+      "id": "coping",
+      "show_if": {"op": "selected", "question": "consent", "option": "1"},
+      "content": [{"type": "text", "text": "What helps you cope with stress? Select all that apply."}],
+      "response": {"type": "choice", "mode": "multiple", "options": [
+        {"id": "1", "label": "Exercise", "code": 1},
+        {"id": "2", "label": "Talking to friends", "code": 2},
+        {"id": "3", "label": "Sleep", "code": 3},
+        {"id": "99", "label": "Something else", "code": 99}
+      ]}
+    },
+    {
+      "id": "coping_other",
+      "show_if": {"op": "selected", "question": "coping", "option": "99"},
+      "content": [{"type": "text", "text": "What else helps you cope?"}],
+      "response": {"type": "text"},
+      "presentation": {"control": "single_line"}
+    },
+    {
+      "id": "comments",
+      "show_if": {"op": "selected", "question": "consent", "option": "1"},
+      "content": [
+        {"type": "text", "text": "Is there anything else you would like to tell us?"},
+        {"type": "text", "text": "Optional"}
+      ],
+      "response": {"type": "text"}
+    }
+  ],
+  "blocks": [
+    {"id": "wellbeing", "kind": "survey", "title": "wellbeing", "questions": ["consent_header", "consent", "age", "gender", "sleep_header", "rested", "stress", "coping", "coping_other", "comments"]}
+  ],
+  "flow": [{"type": "show_block", "block": "wellbeing"}]
+}

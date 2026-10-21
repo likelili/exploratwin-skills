@@ -1,0 +1,13 @@
+"Variable / Field Name","Form Name","Section Header","Field Type","Field Label","Choices, Calculations, OR Slider Labels","Field Note","Text Validation Type OR Show Slider Number","Text Validation Min","Text Validation Max","Identifier?","Branching Logic (Show field only if...)","Required Field?","Custom Alignment","Question Number (surveys only)","Matrix Group Name","Matrix Ranking?","Field Annotation"
+record_id,wellbeing,,text,Record ID,,,,,,,,,,,,,
+consent,wellbeing,"Welcome. This survey asks about your sleep and stress over the past week.",yesno,Do you agree to take part in this survey?,,,,,,,,y,,,,,
+age,wellbeing,,text,What is your age in years?,,,integer,18,99,,[consent] = '1',y,,,,,
+gender,wellbeing,,radio,What is your gender?,"1, Woman | 2, Man | 3, Non-binary | 4, Prefer not to say",,,,,,[consent] = '1',,,,,,
+rested,wellbeing,Sleep,slider,How rested do you feel today?,Not at all | Somewhat | Completely,,number,,,,[consent] = '1',,,,,,
+stress_work,wellbeing,"In the past week, how often did each of these cause you stress?",radio,Work or school,"1, Never | 2, Sometimes | 3, Often | 4, Always",,,,,,[consent] = '1',,,,stress,,
+stress_money,wellbeing,,radio,Money,"1, Never | 2, Sometimes | 3, Often | 4, Always",,,,,,[consent] = '1',,,,stress,,
+stress_health,wellbeing,,radio,Health,"1, Never | 2, Sometimes | 3, Often | 4, Always",,,,,,[consent] = '1',,,,stress,,
+coping,wellbeing,,checkbox,What helps you cope with stress? Select all that apply.,"1, Exercise | 2, Talking to friends | 3, Sleep | 99, Something else",,,,,,[consent] = '1',,,,,,
+coping_other,wellbeing,,text,What else helps you cope?,,,,,,,[coping(99)] = '1',,,,,,
+comments,wellbeing,,notes,Is there anything else you would like to tell us?,,Optional,,,,,[consent] = '1',,,,,,
+stress_score,wellbeing,,calc,Stress score,[stress_work]+[stress_money]+[stress_health],,,,,,,,,,,,@HIDDEN

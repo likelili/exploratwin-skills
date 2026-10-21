@@ -1,0 +1,48 @@
+Commuting survey
+Tell us how you get to work. This form takes about 3 minutes.
+* Indicates required question
+
+Section 1 of 3
+About your commute
+
+1. How do you usually get to work? *
+( ) Car
+( ) Public transit
+( ) Bicycle
+( ) Walk
+( ) I work from home
+    [Go to section based on answer: "I work from home" -> Go to section 3 (Final questions); all other answers -> Continue to next section]
+
+2. How long is your commute, in minutes? *
+Your answer: __________
+
+Section 2 of 3
+Your experience
+
+3. How satisfied are you with your commute? *
+Very dissatisfied   1   2   3   4   5   Very satisfied
+
+4. Which of these problems do you face? (check all that apply)
+[ ] Traffic
+[ ] Delays
+[ ] Crowding
+[ ] Cost
+[ ] Other: __________
+
+5. Rate each part of your commute *
+                Poor    Fair    Good    Excellent
+Comfort          ( )     ( )     ( )       ( )
+Reliability      ( )     ( )     ( )       ( )
+Safety           ( )     ( )     ( )       ( )
+
+Section 3 of 3
+Final questions
+
+6. In which month did you start your current job?
+Choose (drop-down): January, February, March, April, May, June, July, August, September, October, November, December
+
+7. Any other comments?
+Your answer: __________
+
+Never submit passwords through Google Forms.
+This content is neither created nor endorsed by Google.

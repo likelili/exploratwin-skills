@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.2", "id": "fmt", "title": "Formats",
+  "questions": [{"id": "intro", "content": [{"type": "text", "text": "Some coffee questions."}]}],
+  "blocks": [
+    {"id": "main", "kind": "survey", "questions": ["intro"]},
+    {"id": "rate", "kind": "conjoint", "title": "Rate",
+     "attributes": [{"id": "brand", "name": "Brand", "levels": [{"id": "a", "label": "Acme"}, {"id": "b", "label": "Bolt"}, {"id": "c", "label": "Crest"}]},
+                    {"id": "price", "name": "Price", "type": "price", "currency": "USD", "levels": [{"id": "p1", "label": "$3", "value": 3}, {"id": "p2", "label": "$4", "value": 4}]}],
+     "alternatives": {"mode": "generic", "count": 2, "label": "Option {letter}"},
+     "design": {"mode": "generated", "tasks_per_participant": 2, "generator": "random_valid_profiles"},
+     "response": {"type": "rating", "required": true, "scale": [{"id": "s1", "label": "Poor", "code": 1}, {"id": "s2", "label": "Fair", "code": 2}, {"id": "s3", "label": "Good", "code": 3}]}},
+    {"id": "rank", "kind": "conjoint", "title": "Rank",
+     "attributes": [{"id": "brand", "name": "Brand", "levels": [{"id": "a", "label": "Acme"}, {"id": "b", "label": "Bolt"}, {"id": "c", "label": "Crest"}]},
+                    {"id": "price", "name": "Price", "levels": [{"id": "p1", "label": "$3"}, {"id": "p2", "label": "$4"}]}],
+     "alternatives": {"mode": "generic", "count": 3, "label": "Option {letter}"},
+     "design": {"mode": "generated", "tasks_per_participant": 2, "generator": "random_valid_profiles"},
+     "response": {"type": "ranking", "required": true}},
+    {"id": "split", "kind": "conjoint", "title": "Split",
+     "attributes": [{"id": "brand", "name": "Brand", "levels": [{"id": "a", "label": "Acme"}, {"id": "b", "label": "Bolt"}, {"id": "c", "label": "Crest"}]},
+                    {"id": "price", "name": "Price", "levels": [{"id": "p1", "label": "$3"}, {"id": "p2", "label": "$4"}]}],
+     "alternatives": {"mode": "generic", "count": 2, "label": "Option {letter}"},
+     "design": {"mode": "generated", "tasks_per_participant": 2, "generator": "random_valid_profiles"},
+     "response": {"type": "allocation", "required": true, "total": 10, "outside_option": {"id": "none", "label": "None of these", "code": 0}}},
+    {"id": "bw", "kind": "conjoint", "title": "Best and worst",
+     "attributes": [{"id": "brand", "name": "Brand", "levels": [{"id": "a", "label": "Acme"}, {"id": "b", "label": "Bolt"}, {"id": "c", "label": "Crest"}]},
+                    {"id": "price", "name": "Price", "levels": [{"id": "p1", "label": "$3"}, {"id": "p2", "label": "$4"}]}],
+     "alternatives": {"mode": "generic", "count": 3, "label": "Option {letter}"},
+     "design": {"mode": "generated", "tasks_per_participant": 2, "generator": "random_valid_profiles"},
+     "response": {"type": "best_worst", "required": true, "best_label": "Most preferred", "worst_label": "Least preferred"}}
+  ],
+  "flow": [{"type": "show_block", "block": "main"}, {"type": "show_block", "block": "rate"}, {"type": "show_block", "block": "rank"}, {"type": "show_block", "block": "split"}, {"type": "show_block", "block": "bw"}]
+}

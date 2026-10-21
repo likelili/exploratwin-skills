@@ -62,6 +62,32 @@ the website.
 | `references/troubleshooting.md` | Error codes and what to do |
 | `examples/` | Five example surveys: a plain survey, logic and a loop, a conjoint, an adaptive conjoint, a MaxDiff |
 
+## The survey-format skill
+
+`skills/survey-format` teaches an agent the standard survey format, the JSON
+format ExploraTwin and the [surveytwin library](https://github.com/likelili/surveytwin-lib)
+run. With it, an agent writes surveys in the format, converts questionnaires from
+other tools and documents into it word for word (SurveyMonkey, Google Forms,
+Microsoft Forms, REDCap, LimeSurvey, XLSForm, SurveyJS, Typeform, Word, PDF,
+text), and checks them. It needs no ExploraTwin account: the surveytwin library
+checks a survey on your computer (Python 3.11 or later).
+
+Install it as the `exploratwin` skill, for example in Claude Code:
+
+```bash
+cp -R exploratwin-skills/skills/survey-format ~/.claude/skills/
+```
+
+| File | What it holds |
+|---|---|
+| `SKILL.md` | Writing, converting and checking a survey, and the rules of a faithful conversion |
+| `references/codebook.md` | Every part of the format, how a twin reads it, common mistakes |
+| `references/fields.md` | Every object and field |
+| `references/converting.md` | Converting from other tools and documents, tool by tool |
+| `references/checking.md` | The three ways to check a survey, and every check code |
+| `references/survey-format.schema.json` | The JSON Schema |
+| `examples/` | Six example surveys and four worked conversions (Word, Google Forms, REDCap, SurveyMonkey) |
+
 ## Keys and privacy
 
 - A key acts as your account, limited to the capabilities chosen when it was
@@ -73,11 +99,11 @@ the website.
 
 ## Versions
 
-The skill's version is in `SKILL.md` (1.1.1). The same files are served at
+The skill's version is in `SKILL.md` (1.1.2). The same files are served at
 [exploratwin.org/agent](https://exploratwin.org/agent/start.md), and
 `GET /api/agent/v1/me` reports the current `skill_version`. When it changes,
 the skill tells your agent to fetch the files again. Releases here follow the
-website.
+website. The survey-format skill has its own version, in its `SKILL.md` (1.0.0).
 
 ## Help
 

@@ -1,0 +1,113 @@
+{
+  "schema_version": "0.1",
+  "id": "coffee_habits_study",
+  "title": "COFFEE HABITS STUDY",
+  "questions": [
+    {"id": "intro", "content": [{"type": "text", "text": "Thank you for taking part in this study about coffee. It takes about 5 minutes. Your answers are anonymous."}]},
+    {"id": "section_a", "content": [{"type": "text", "text": "SECTION A: ABOUT YOU"}]},
+    {
+      "id": "q1", "export_name": "Q1",
+      "content": [{"type": "text", "text": "What is your age?"}],
+      "response": {"type": "choice", "mode": "single", "options": [
+        {"id": "under_18", "label": "Under 18"},
+        {"id": "18_34", "label": "18-34"},
+        {"id": "35_54", "label": "35-54"},
+        {"id": "55_plus", "label": "55 or older"}
+      ]},
+      "skip": [{"when": {"op": "selected", "question": "q1", "option": "under_18"}, "to": "end_of_survey", "description": "TERMINATE"}]
+    },
+    {
+      "id": "q2", "export_name": "Q2",
+      "content": [{"type": "text", "text": "Where do you usually buy coffee? (Select one)"}],
+      "response": {"type": "choice", "mode": "single", "options": [
+        {"id": "coffee_shop", "label": "A coffee shop"},
+        {"id": "supermarket", "label": "A supermarket"},
+        {"id": "online", "label": "Online"},
+        {"id": "other", "label": "Other (please specify)", "write_in": true}
+      ]}
+    },
+    {"id": "section_b", "content": [{"type": "text", "text": "SECTION B: YOUR COFFEE"}]},
+    {
+      "id": "q3", "export_name": "Q3",
+      "content": [{"type": "text", "text": "Which of these do you drink at least once a week? (Select all that apply)"}],
+      "response": {
+        "type": "choice", "mode": "multiple",
+        "options": [
+          {"id": "espresso", "label": "Espresso"},
+          {"id": "latte", "label": "Latte"},
+          {"id": "cold_brew", "label": "Cold brew"},
+          {"id": "drip", "label": "Drip coffee"},
+          {"id": "none", "label": "None of these"}
+        ],
+        "randomization": {
+          "order": "positions",
+          "positions": [{"draw": "shuffled"}, {"draw": "shuffled"}, {"draw": "shuffled"}, {"draw": "shuffled"}, "none"],
+          "shuffled": ["espresso", "latte", "cold_brew", "drip"]
+        }
+      },
+      "skip": [{"when": {"op": "selected", "question": "q3", "option": "none"}, "to": "q6", "description": "IF Q3 = NONE OF THESE, SKIP TO Q6"}]
+    },
+    {
+      "id": "q4", "export_name": "Q4",
+      "content": [{"type": "text", "text": "How many cups of coffee do you drink on a typical day? (Enter a number from 0 to 20)"}],
+      "response": {"type": "text", "format": "number", "number": {"min": 0, "max": 20, "decimals": 0}},
+      "presentation": {"control": "single_line"}
+    },
+    {
+      "id": "q5", "export_name": "Q5",
+      "content": [{"type": "text", "text": "How much do you agree or disagree with each statement?"}],
+      "response": {
+        "type": "matrix", "mode": "per_row",
+        "rows": [
+          {"id": "a", "label": "Coffee helps me focus."},
+          {"id": "b", "label": "I enjoy trying new coffee drinks."},
+          {"id": "c", "label": "Coffee is too expensive."},
+          {"id": "d", "label": "I care where my coffee comes from."}
+        ],
+        "row_response": {"type": "choice", "mode": "single", "options": [
+          {"id": "1", "label": "Strongly disagree", "code": 1},
+          {"id": "2", "label": "Disagree", "code": 2},
+          {"id": "3", "label": "Neither agree nor disagree", "code": 3},
+          {"id": "4", "label": "Agree", "code": 4},
+          {"id": "5", "label": "Strongly agree", "code": 5}
+        ]},
+        "randomization": {"order": "shuffle"}
+      }
+    },
+    {
+      "id": "q6", "export_name": "Q6",
+      "content": [{"type": "text", "text": "Please rank these from most important (1) to least important (4) when you choose a coffee."}],
+      "response": {"type": "ranking", "items": [
+        {"id": "taste", "label": "Taste"},
+        {"id": "price", "label": "Price"},
+        {"id": "convenience", "label": "Convenience"},
+        {"id": "brand", "label": "Brand"}
+      ]}
+    },
+    {
+      "id": "q7", "export_name": "Q7",
+      "content": [{"type": "text", "text": "How likely are you to recommend your favorite coffee shop to a friend? (0 = Not at all likely, 10 = Extremely likely)"}],
+      "response": {"type": "choice", "mode": "single", "options": [
+        {"id": "0", "label": "0", "code": 0}, {"id": "1", "label": "1", "code": 1}, {"id": "2", "label": "2", "code": 2},
+        {"id": "3", "label": "3", "code": 3}, {"id": "4", "label": "4", "code": 4}, {"id": "5", "label": "5", "code": 5},
+        {"id": "6", "label": "6", "code": 6}, {"id": "7", "label": "7", "code": 7}, {"id": "8", "label": "8", "code": 8},
+        {"id": "9", "label": "9", "code": 9}, {"id": "10", "label": "10", "code": 10}
+      ]},
+      "presentation": {"control": "horizontal"}
+    },
+    {
+      "id": "q8", "export_name": "Q8",
+      "content": [{"type": "text", "text": "What, if anything, would make you drink more coffee?"}],
+      "response": {"type": "text"}
+    },
+    {"id": "thanks", "content": [{"type": "text", "text": "Thank you for your time."}]}
+  ],
+  "blocks": [
+    {"id": "section_a_block", "kind": "survey", "title": "SECTION A: ABOUT YOU", "questions": ["intro", "section_a", "q1", "q2"]},
+    {"id": "section_b_block", "kind": "survey", "title": "SECTION B: YOUR COFFEE", "questions": ["section_b", "q3", "q4", "q5", "q6", "q7", "q8", "thanks"]}
+  ],
+  "flow": [
+    {"type": "show_block", "block": "section_a_block"},
+    {"type": "show_block", "block": "section_b_block"}
+  ]
+}

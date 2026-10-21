@@ -1,0 +1,42 @@
+App Feedback 2026
+
+Thanks for using our app. This short survey helps us improve it.
+
+1. How would you rate your overall experience with our app?
+* * * * *   (1 to 5 stars)
+
+2. Please rate the following:
+                  Very poor   Poor   Fair   Good   Very good
+Ease of use           O         O      O      O        O
+Speed                 O         O      O      O        O
+Design                O         O      O      O        O
+
+3. Please rank the following features in order of importance to you.
+= Notifications
+= Offline mode
+= Dark mode
+= Widgets
+
+4. How likely is it that you would recommend our app to a friend or colleague?
+NOT AT ALL LIKELY                                              EXTREMELY LIKELY
+0    1    2    3    4    5    6    7    8    9    10
+
+5. Which device do you use our app on most often?
+O iPhone
+O Android phone
+O Tablet
+O Computer
+
+6. Please upload a screenshot of any problem you found. (optional)
+[ Choose File ]  No file chosen
+
+7. If you would like a reply, please tell us how to reach you.
+Name: ____________________
+Email Address: ____________________
+
+8. Is there anything else you would like to tell us?
+[                                                     ]
+[                                                     ]
+
+Powered by SurveyMonkey
+See how easy it is to create a survey.

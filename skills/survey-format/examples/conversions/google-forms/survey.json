@@ -1,0 +1,99 @@
+{
+  "schema_version": "0.1",
+  "id": "commuting_survey",
+  "title": "Commuting survey",
+  "questions": [
+    {"id": "intro", "content": [{"type": "text", "text": "Tell us how you get to work. This form takes about 3 minutes."}]},
+    {"id": "section_1", "content": [{"type": "text", "text": "About your commute"}]},
+    {
+      "id": "q1", "export_name": "1",
+      "content": [{"type": "text", "text": "How do you usually get to work?"}],
+      "response": {"type": "choice", "mode": "single", "required": true, "options": [
+        {"id": "car", "label": "Car"},
+        {"id": "transit", "label": "Public transit"},
+        {"id": "bicycle", "label": "Bicycle"},
+        {"id": "walk", "label": "Walk"},
+        {"id": "home", "label": "I work from home"}
+      ]}
+    },
+    {
+      "id": "q2", "export_name": "2",
+      "content": [{"type": "text", "text": "How long is your commute, in minutes?"}],
+      "response": {"type": "text", "format": "number", "required": true},
+      "presentation": {"control": "single_line"}
+    },
+    {"id": "section_2", "content": [{"type": "text", "text": "Your experience"}]},
+    {
+      "id": "q3", "export_name": "3",
+      "content": [{"type": "text", "text": "How satisfied are you with your commute?"}],
+      "response": {"type": "choice", "mode": "single", "required": true, "options": [
+        {"id": "1", "label": "1 - Very dissatisfied", "code": 1},
+        {"id": "2", "label": "2", "code": 2},
+        {"id": "3", "label": "3", "code": 3},
+        {"id": "4", "label": "4", "code": 4},
+        {"id": "5", "label": "5 - Very satisfied", "code": 5}
+      ]},
+      "presentation": {"control": "horizontal"}
+    },
+    {
+      "id": "q4", "export_name": "4",
+      "content": [{"type": "text", "text": "Which of these problems do you face? (check all that apply)"}],
+      "response": {"type": "choice", "mode": "multiple", "options": [
+        {"id": "traffic", "label": "Traffic"},
+        {"id": "delays", "label": "Delays"},
+        {"id": "crowding", "label": "Crowding"},
+        {"id": "cost", "label": "Cost"},
+        {"id": "other", "label": "Other", "write_in": true}
+      ]}
+    },
+    {
+      "id": "q5", "export_name": "5",
+      "content": [{"type": "text", "text": "Rate each part of your commute"}],
+      "response": {
+        "type": "matrix", "mode": "per_row", "required": true,
+        "rows": [
+          {"id": "comfort", "label": "Comfort"},
+          {"id": "reliability", "label": "Reliability"},
+          {"id": "safety", "label": "Safety"}
+        ],
+        "row_response": {"type": "choice", "mode": "single", "options": [
+          {"id": "poor", "label": "Poor"},
+          {"id": "fair", "label": "Fair"},
+          {"id": "good", "label": "Good"},
+          {"id": "excellent", "label": "Excellent"}
+        ]}
+      }
+    },
+    {"id": "section_3", "content": [{"type": "text", "text": "Final questions"}]},
+    {
+      "id": "q6", "export_name": "6",
+      "content": [{"type": "text", "text": "In which month did you start your current job?"}],
+      "response": {"type": "choice", "mode": "single", "options": [
+        {"id": "jan", "label": "January"}, {"id": "feb", "label": "February"}, {"id": "mar", "label": "March"},
+        {"id": "apr", "label": "April"}, {"id": "may", "label": "May"}, {"id": "jun", "label": "June"},
+        {"id": "jul", "label": "July"}, {"id": "aug", "label": "August"}, {"id": "sep", "label": "September"},
+        {"id": "oct", "label": "October"}, {"id": "nov", "label": "November"}, {"id": "dec", "label": "December"}
+      ]},
+      "presentation": {"control": "dropdown"}
+    },
+    {
+      "id": "q7", "export_name": "7",
+      "content": [{"type": "text", "text": "Any other comments?"}],
+      "response": {"type": "text"}
+    }
+  ],
+  "blocks": [
+    {"id": "commute", "kind": "survey", "title": "About your commute", "questions": ["intro", "section_1", "q1", "q2"]},
+    {"id": "experience", "kind": "survey", "title": "Your experience", "questions": ["section_2", "q3", "q4", "q5"]},
+    {"id": "final", "kind": "survey", "title": "Final questions", "questions": ["section_3", "q6", "q7"]}
+  ],
+  "flow": [
+    {"type": "show_block", "block": "commute"},
+    {
+      "type": "branch", "id": "skip_experience",
+      "when": {"op": "not_selected", "question": "q1", "option": "home", "description": "\"I work from home\" goes to section 3"},
+      "then": [{"type": "show_block", "block": "experience"}]
+    },
+    {"type": "show_block", "block": "final"}
+  ]
+}

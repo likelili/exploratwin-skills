@@ -1,0 +1,82 @@
+{
+  "schema_version": "0.1",
+  "id": "app_feedback_2026",
+  "title": "App Feedback 2026",
+  "questions": [
+    {"id": "intro", "content": [{"type": "text", "text": "Thanks for using our app. This short survey helps us improve it."}]},
+    {
+      "id": "q1", "export_name": "1",
+      "content": [{"type": "text", "text": "How would you rate your overall experience with our app?"}],
+      "response": {"type": "number", "min": 1, "max": 5, "step": 1},
+      "presentation": {"control": "stars"}
+    },
+    {
+      "id": "q2", "export_name": "2",
+      "content": [{"type": "text", "text": "Please rate the following:"}],
+      "response": {
+        "type": "matrix", "mode": "per_row",
+        "rows": [
+          {"id": "ease", "label": "Ease of use"},
+          {"id": "speed", "label": "Speed"},
+          {"id": "design", "label": "Design"}
+        ],
+        "row_response": {"type": "choice", "mode": "single", "options": [
+          {"id": "very_poor", "label": "Very poor"},
+          {"id": "poor", "label": "Poor"},
+          {"id": "fair", "label": "Fair"},
+          {"id": "good", "label": "Good"},
+          {"id": "very_good", "label": "Very good"}
+        ]}
+      }
+    },
+    {
+      "id": "q3", "export_name": "3",
+      "content": [{"type": "text", "text": "Please rank the following features in order of importance to you."}],
+      "response": {"type": "ranking", "items": [
+        {"id": "notifications", "label": "Notifications"},
+        {"id": "offline", "label": "Offline mode"},
+        {"id": "dark_mode", "label": "Dark mode"},
+        {"id": "widgets", "label": "Widgets"}
+      ]}
+    },
+    {
+      "id": "q4", "export_name": "4",
+      "content": [{"type": "text", "text": "How likely is it that you would recommend our app to a friend or colleague?"}],
+      "response": {"type": "choice", "mode": "single", "options": [
+        {"id": "0", "label": "0 - NOT AT ALL LIKELY", "code": 0}, {"id": "1", "label": "1", "code": 1}, {"id": "2", "label": "2", "code": 2},
+        {"id": "3", "label": "3", "code": 3}, {"id": "4", "label": "4", "code": 4}, {"id": "5", "label": "5", "code": 5},
+        {"id": "6", "label": "6", "code": 6}, {"id": "7", "label": "7", "code": 7}, {"id": "8", "label": "8", "code": 8},
+        {"id": "9", "label": "9", "code": 9}, {"id": "10", "label": "10 - EXTREMELY LIKELY", "code": 10}
+      ]},
+      "presentation": {"control": "horizontal"}
+    },
+    {
+      "id": "q5", "export_name": "5",
+      "content": [{"type": "text", "text": "Which device do you use our app on most often?"}],
+      "response": {"type": "choice", "mode": "single", "options": [
+        {"id": "iphone", "label": "iPhone"},
+        {"id": "android", "label": "Android phone"},
+        {"id": "tablet", "label": "Tablet"},
+        {"id": "computer", "label": "Computer"}
+      ]}
+    },
+    {
+      "id": "q7", "export_name": "7",
+      "content": [{"type": "text", "text": "If you would like a reply, please tell us how to reach you."}],
+      "response": {"type": "form", "fields": [
+        {"id": "name", "label": "Name"},
+        {"id": "email", "label": "Email Address"}
+      ]}
+    },
+    {
+      "id": "q8", "export_name": "8",
+      "content": [{"type": "text", "text": "Is there anything else you would like to tell us?"}],
+      "response": {"type": "text"},
+      "presentation": {"control": "multi_line"}
+    }
+  ],
+  "blocks": [
+    {"id": "feedback", "kind": "survey", "title": "App Feedback 2026", "questions": ["intro", "q1", "q2", "q3", "q4", "q5", "q7", "q8"]}
+  ],
+  "flow": [{"type": "show_block", "block": "feedback"}]
+}

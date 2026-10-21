@@ -1,0 +1,55 @@
+COFFEE HABITS STUDY
+Questionnaire - version 2 (March 2026)
+
+Thank you for taking part in this study about coffee. It takes about 5 minutes. Your answers are anonymous.
+
+SECTION A: ABOUT YOU
+
+Q1. What is your age?
+( ) Under 18   [TERMINATE]
+( ) 18-34
+( ) 35-54
+( ) 55 or older
+
+Q2. Where do you usually buy coffee? (Select one)
+( ) A coffee shop
+( ) A supermarket
+( ) Online
+( ) Other (please specify): ______________
+
+SECTION B: YOUR COFFEE
+
+Q3. Which of these do you drink at least once a week? (Select all that apply)   [RANDOMIZE; KEEP "NONE OF THESE" LAST]
+[ ] Espresso
+[ ] Latte
+[ ] Cold brew
+[ ] Drip coffee
+[ ] None of these
+
+[IF Q3 = "NONE OF THESE", SKIP TO Q6]
+
+Q4. How many cups of coffee do you drink on a typical day? (Enter a number from 0 to 20)
+______ cups
+
+Q5. How much do you agree or disagree with each statement?   [RANDOMIZE STATEMENTS]
+                                        Strongly disagree   Disagree   Neither agree nor disagree   Agree   Strongly agree
+a. Coffee helps me focus.                       1               2                  3                  4            5
+b. I enjoy trying new coffee drinks.            1               2                  3                  4            5
+c. Coffee is too expensive.                     1               2                  3                  4            5
+d. I care where my coffee comes from.           1               2                  3                  4            5
+
+Q6. Please rank these from most important (1) to least important (4) when you choose a coffee.
+___ Taste
+___ Price
+___ Convenience
+___ Brand
+
+Q7. How likely are you to recommend your favorite coffee shop to a friend? (0 = Not at all likely, 10 = Extremely likely)
+0   1   2   3   4   5   6   7   8   9   10
+
+Q8. What, if anything, would make you drink more coffee?
+_________________________________________________
+
+Thank you for your time.
+
+Page 2 of 2
