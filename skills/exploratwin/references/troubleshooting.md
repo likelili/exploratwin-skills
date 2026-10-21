@@ -15,7 +15,6 @@ on the website (Support).
 | `account_not_active` | 403 | The account is not approved or active. The person sorts this out on the website. |
 | `agent_access_closed` | 403 | Agent access is not open to this account yet. Nothing to do but wait. |
 | `capability_missing` | 403 | The key may not do this. The person can make a key with that capability. |
-| `builder_closed` | 403 | Surveys in the standard format are not open to this account yet. Use a QSF meanwhile. |
 | `forbidden` | 403 | Something on the account is not available to it (for example twin banks). Read the message. |
 | `rate_limited` | 429 | Too many calls. Wait `Retry-After` seconds, then go slower (about one call a second). |
 | `internal_error` | 500 | Something went wrong on the server. Retry later with growing pauses; if it keeps happening, tell the person. |
@@ -29,7 +28,7 @@ on the website (Support).
 | `revision_conflict` | 409 | The survey changed since you read it. Read it again, reapply your change, save with the new revision. Never save over the newer version. |
 | `project_holds_qsf`, `project_holds_builder_survey` | 409 | A project holds one kind of survey. Make a new project. |
 | `project_already_ran` | 409 | The project ran, and its results stay with its survey. Read its survey (`GET /surveys/{id}/definition`), save it in a new project (`POST /surveys`), and change it or prepare the run there. |
-| `project_holds_earlier_survey` | 409 | The project's survey was made in the website's earlier builder; saving would replace it. Make a new project. |
+| `earlier_survey_not_saved` | 409 | The project's survey was made in the website's earlier builder. Read it in the standard format (`GET /surveys/{id}/definition`), save it (`PUT`), then prepare the run. |
 | `survey_not_in_format` | 422 | The JSON is too far from the standard format to be read; `problems` say where. Compare it with the schema. |
 | `no_survey` | 409 | The project has no survey yet. Save one or upload a QSF. |
 | `survey_has_problems` | 422 | The survey has errors (`problems`, each with a `path`). Fix them; `POST /survey-check` shows them all. |

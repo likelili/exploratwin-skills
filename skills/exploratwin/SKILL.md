@@ -2,12 +2,12 @@
 name: exploratwin
 description: Work on ExploraTwin (exploratwin.org) for the person you assist - build surveys in its standard format or upload Qualtrics QSF files, check and preview them, count digital twins, estimate costs, prepare survey runs for the person's approval, make synthetic persona banks, and download results. Use when the person asks to create, test or run a survey on digital twins or AI participants, to pilot a questionnaire, a conjoint or a MaxDiff study, to generate synthetic profiles of an audience, or to fetch ExploraTwin results.
 metadata:
-  version: "1.2.0"
+  version: "1.2.1"
 ---
 
 # ExploraTwin
 
-Skill version **1.2.0**. ExploraTwin runs surveys on digital twins: AI
+Skill version **1.2.1**. ExploraTwin runs surveys on digital twins: AI
 participants built from real people's survey answers. You work for one person,
 with the API key they made, and everything you do is done as them.
 

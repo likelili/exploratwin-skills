@@ -42,7 +42,7 @@ Version 1. Base address: `https://exploratwin.org/api/agent/v1`.
   "key": {"name": "Claude Code on my laptop", "capabilities": ["surveys:read", "..."], "expires_at": "2027-01-11T..."},
   "credits": {"available_usd": "$24.10", "used_this_month_usd": "$5.90", "resets_at": "...", "runs_stop_when_used_up": true},
   "api_version": "1",
-  "skill_version": "1.2.0",
+  "skill_version": "1.2.1",
   "skill_url": "https://exploratwin.org/agent/SKILL.md"
 }
 ```
@@ -81,7 +81,7 @@ standard format (`source: "builder"`) or a QSF file (`source: "qsf"`), not both.
 
 `?limit=&cursor=`. Answer: `{"surveys": [{"id", "title", "source", "revision", "updated_at"}], "next_cursor"}`.
 `source` is `builder`, `qsf`, `earlier_builder` (made in the website's earlier
-builder; agents cannot run it) or `none`.
+builder: read it in the standard format, and save it before a run) or `none`.
 
 ### `POST /surveys` (`surveys:write`)
 
@@ -105,7 +105,11 @@ is saved (so it can be fixed), but cannot run.
 
 `{"definition": {...}, "revision": 3, "source": "builder", "problems": [...], "warnings": [...]}`.
 `source` says what a run on the project uses: this survey only when it is
-`builder`.
+`builder`. For a survey made in the website's earlier builder (`source:
+"earlier_builder"`), the answer gives it converted to the standard format, with
+`"converted_from_earlier_builder": true` and revision `0`; save it with `PUT`
+(and `expected_revision: 0`) before preparing a run, as the website's builder
+does. The earlier survey stays stored.
 Each problem: `{"path": "$.questions[2].response.options", "message": "...", "code": "...", "level": "error"}`.
 
 ### `PUT /surveys/{id}/definition` (`surveys:write`)
@@ -119,10 +123,9 @@ project with no survey yet). Otherwise `409 revision_conflict` with
 `current_revision`: read the survey again and reapply your change. Each save
 raises the revision by one and keeps the earlier version. Answer:
 `{"revision": 4, "problems": [...], "warnings": [...]}`. Refused for a QSF
-project (`409 project_holds_qsf`), for a project whose survey was made in
-the website's earlier builder (`409 project_holds_earlier_survey`), and for a
-project that ran (`409 project_already_ran`: its results stay with the survey
-they came from; save the changed survey in a new project).
+project (`409 project_holds_qsf`) and for a project that ran (`409
+project_already_ran`: its results stay with the survey they came from; save the
+changed survey in a new project).
 
 The server tidies a survey as it saves it (the format version it needs, and
 settings that no longer choose anything), so read it back before your next
