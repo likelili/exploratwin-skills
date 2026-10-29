@@ -28,9 +28,11 @@ Version 1. Base address: `https://exploratwin.org/api/agent/v1`.
 - **Paging.** Lists take `limit` (at most 100) and return `next_cursor`; pass it
   back as `cursor` for the next page. `null` means the last page.
 - **Free actions.** Reads, checks, previews, counts and estimates never call a
-  paid model. Only an approved run or persona bank costs credits, with two
-  small exceptions: the persona generator's plan and preview (about $0.01
-  each) are charged when you call them.
+  paid model. Only an approved run or persona bank costs credits, with the
+  persona generator's steps before the bank as the exception: its plan (about
+  $0.15), an update of the plan (about $0.01 to $0.05) and its preview (about
+  $0.01) are charged when you call them, after the person said yes
+  ([approvals.md](approvals.md)).
 
 ## Account and options
 
@@ -256,74 +258,130 @@ Withdraw a `pending` or `stale` request.
 
 ## The persona generator
 
-Synthetic profiles saved as the person's private persona bank. The workflow,
-the plan's format and its rules: [persona-generator.md](persona-generator.md).
+Synthetic profiles saved as the person's private persona bank, with the
+website's own generator. The workflow, what to ask the person, and the plan's
+parts: [persona-generator.md](persona-generator.md). A plan, an update and a
+preview are charged when you make them (each also shows on the website under
+Agent requests); the bank waits for the person's approval.
 
 ### `GET /persona-generator/options` (any capability)
 
-`available` (open to this account), `census_ready`, `census` (`source`,
-`country`, `released`, `sample_records`), `demographic_fields` (each `id`,
-`label`, `values`), `standard_characteristics`, `limits` (`profiles` with
-`min`, `max`, `default`; `examples`, `profiles_per_example`, `groups`,
-`characteristics`, `characteristics_asked`, `values_per_characteristic`,
-`audience_chars`, `preview_profiles`), `costs` (`plan_usd`,
-`per_profile_usd`, `note`) and `guide`. Dollar amounts are decimal text, as in
-every estimate.
+`available` (open to this account), `limits` (`profiles` with `min`, `max`,
+`default`; `preview_profiles`; `characteristics`, `values`, `examples`,
+`per_example`, `people`, `parents`, `combinations`, `text_chars`, and
+`demographics` with `min`, `max`, `categories` and `asked`: the person's own,
+at most), `required_demographics` (`["age", "gender", "region"]`), `age_groups`,
+`models`, `costs` (`plan`, `update` by kind (`audience`, `map`, `examples`,
+`tables`), `preview`, `per_profile`, `bank_of_200`, `note`), `times` and
+`guide`. Each cost is an estimate (`estimated_charge_usd`,
+`estimated_charge_nanos_usd`, `estimated_provider_cost_usd`); dollar amounts
+are decimal text, as in every estimate.
 
-### `POST /persona-generator/plan` (`runs:request`, charged: about $0.01)
+### `POST /persona-generator/plans` (`runs:request`, charged: about $0.15)
 
 ```json
-{"audience": "US adults who used an AI chatbot in the past month.",
+{"audience": "U.S. adults aged 18 to 60 who may buy a new winter coat.",
  "examples": [], "profiles_per_example": 1,
- "characteristics": [{"name": "Occupation", "values": []}]}
+ "demographics": [{"name": "Household income", "values": ["$75k–$99k", "$100k or more"]}],
+ "characteristics": [{"name": "Preferred coat style", "values": []}],
+ "names": false, "replace_unfinished": false}
 ```
 
-The AI's plan. Answer: `plan`, `problems`, `notes`, `profiles`,
-`matching_sample_records`, `group_matching_records`, `group_profiles`,
-`warnings`, `estimate` (`estimated_charge_usd`, `estimated_charge_nanos_usd`,
-`estimated_provider_cost_usd`, `people`: the bank's cost).
+Starts the plan; it is made in the background (about 4 minutes). Answer
+(`202`): the plan (as `GET /persona-generator/plans/{id}` gives it, `status`
+`queued`) and `charge_estimate`. Refusals: `400 form_has_problems`
+(`problems`), `409 unfinished_plan` (the person has an unfinished plan in the
+website's generator, named in `plan`: ask them, then send
+`"replace_unfinished": true`), `409 plan_running`, `402 insufficient_credits`.
 
-### `POST /persona-generator/plan/check` (`runs:request`, free)
+### `GET /persona-generator/plans` (`runs:request`, free)
 
-`{"plan": {...}, "profiles": 200}`. The plan cleaned and checked, with the
-same answer as above. `profiles` is for a described audience; an example
-plan counts its own.
+The person's recent plans, newest first; the first is the one the website's
+generator offers them. Each: `id`, `status`, `name`, `audience`,
+`made_by_agent` (the key's name, or `null` for a plan made on the website),
+`unfinished`, `review_url`, `created_at`, `updated_at`.
 
-### `POST /persona-generator/preview` (`runs:request`, charged: about $0.01)
+### `GET /persona-generator/plans/{id}` (`runs:request`, free)
 
-`{"plan": {...}, "profiles": 200, "seed": 3}`. Up to five profiles written as
-the bank's would be (never more than `profiles`), drawn separately from the
-bank. Answer: `seed`, `profiles` (each `profile_id`, `name`, `group`,
-`facts`, `description`, `text`: what a twin's model reads), `warnings`. A plan
-with problems: `422 plan_has_problems`.
+```json
+{"id": "3f1...", "status": "ready", "step": null, "progress": {"done": 0, "total": 0}, "error": null,
+ "form": {"who": "...", "examples": [], "variations": 1, "demographics": [...], "characteristics": [...], "names": false},
+ "plan": {"name": "...", "population": "...", "rule": {"allowed": {...}, "age_min": 18, "age_max": 60, "text": "..."},
+          "demographics": {"fields": [...], "finer": {...}, "sources": [...]}, "age_bands": ["18–24", "..."],
+          "characteristics": [...], "characteristic_sources": [...], "order": [...], "parents": {...}, "why": {...},
+          "overall": {...}, "targets": {}, "rules": [], "examples": [], "names": false},
+ "checks": {"problems": [], "warnings": [], "trial": []}, "profiles": 200,
+ "estimates": {"update": {...}, "preview": {...}, "per_profile": {...}},
+ "made_by_agent": "Claude Code", "review_url": "https://exploratwin.org/?mode=library&persona_plan=3f1...",
+ "created_at": "...", "updated_at": "...", "finished_at": "..."}
+```
+
+While it is made, `status` is `queued`, `demographics`, `characteristics`,
+`audience`, `map` or `tables`, `step` says it in words and `plan` is `null`
+(or, during an update, the plan as edited). `failed` gives `error`. `plan`
+leaves out the server's percentage tables and logs.
+
+### `POST /persona-generator/plans/{id}/edit` (`runs:request`; free, or charged for an update)
+
+Any of: `name`, `names`, `targets`, `rules` (free, at once); `demographics`,
+`characteristics`, `rule`, `examples`, `parents` (an update, run again:
+about $0.01 to $0.05). Shapes: [persona-generator.md](persona-generator.md),
+step 6. Answer: the plan, with `charged` (and `charge_estimate` when charged);
+an update's `status` is `queued` until it is `ready` again. Refusals:
+`422 edit_has_problems` (nothing changed; `problems`), `409 plan_not_ready`
+(being made or updated), `409 plan_failed`, `400 nothing_to_change`.
+
+### `POST /persona-generator/plans/{id}/retry` (`runs:request`, charged)
+
+A `failed` plan (or update) run again as it was asked. `409 plan_not_failed`
+for any other plan.
+
+### `POST /persona-generator/plans/{id}/preview` (`runs:request`, charged: about $0.01)
+
+`{"profiles": 200, "seed": 7}`. The bank's first profiles (up to five,
+never more than `profiles`), written as the bank's are. Answer: `seed`,
+`profiles` (each `profile_id`, `name`, `group`, `facts`, `description`,
+`text`: what a twin's model reads), `warnings`, `charge_estimate`. A plan with
+problems: `422 plan_has_problems`.
 
 ### `POST /persona-generator/requests` (`runs:request`, free)
 
 Header `Idempotency-Key` (required). Body:
 
 ```json
-{"plan": {...}, "profiles": 200, "seed": 7, "name": "AI chatbot users",
- "reason": "Profiles for the AI subscription survey pilot."}
+{"plan_id": "3f1...", "profiles": 200, "seed": 7, "name": "Northern U.S. luxury coat shoppers",
+ "reason": "Profiles for the winter coat conjoint."}
 ```
 
 Answer (`201`): the request, `kind: "persona_bank"`:
 
 ```json
 {"id": "5d2...", "kind": "persona_bank", "status": "pending",
- "bank": {"name": "AI chatbot users", "profiles": 200, "seed": 7, "start": "description", "audience": "...",
-          "criteria": {"age_min": 18, "age_max": 64}, "groups": [{"name": "...", "share": 0.4}],
-          "characteristics": ["Occupation", "..."], "names": false},
+ "bank": {"name": "Northern U.S. luxury coat shoppers", "profiles": 200, "seed": 7, "plan_id": "3f1...",
+          "audience": "...", "restrictions": ["Age: 18 to 60"], "demographics": ["Age", "Gender", "..."],
+          "characteristics": ["Preferred coat style", "..."], "examples": 0, "names": false},
  "estimate": {...}, "reason": "...", "created_at": "...", "expires_at": "...", "decided_at": null,
  "generation_id": null, "bank_id": null, "outcome": {},
+ "review_url": "https://exploratwin.org/?mode=library&persona_plan=3f1...",
  "approve_url": "https://exploratwin.org/?agent_request=5d2..."}
 ```
 
 It waits for the person, like a run request (`GET /requests/{id}`, the same
-statuses, `POST /requests/{id}/withdraw`). While the bank is created
-(`executing`), `progress` gives `status`, `done` and `total`. `succeeded`
-sets `bank_id` (and `outcome.version_id`); `failed` sets `outcome.message`. A
-request whose bank could not start goes back to `pending`, with
-`outcome.message`.
+statuses, `POST /requests/{id}/withdraw`). It becomes `stale` when the plan
+changes after it was prepared (`outcome.stale_reason: "plan_changed"`). While
+the bank is created (`executing`), `progress` gives `status`, `done` and
+`total`. `succeeded` sets `bank_id` (and `outcome.version_id`); `failed` sets
+`outcome.message`. A request whose bank could not start goes back to
+`pending`, with `outcome.message`. Refusals: `404 plan_not_found`,
+`409 plan_not_ready`, `409 plan_failed`, `422 plan_has_problems`,
+`400 generator_refused` (the bank cannot be made as asked; the message says
+why), `400 plan_id_required`.
+
+### The earlier generator's routes
+
+`POST /persona-generator/plan`, `/plan/check` and `/preview`, and a bank
+request with a `plan` instead of a `plan_id`, answer `410 generator_changed`:
+fetch the skill again.
 
 ## Runs and results
 

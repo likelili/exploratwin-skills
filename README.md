@@ -38,14 +38,16 @@ If your agent keeps skills as folders, install `skills/exploratwin` once:
 
 | | |
 |---|---|
-| **When you ask** | Build and change surveys; upload pictures and QSF files; check and preview surveys; count twins; estimate costs; prepare runs and persona banks; make persona generator plans and previews (charged directly, about $0.01 each); read results |
+| **When you ask** | Build and change surveys; upload pictures and QSF files; check and preview surveys; count twins; estimate costs; prepare runs and persona banks; read results |
+| **After you say yes in the conversation, or within an amount you allowed** | The persona generator's plan (about $0.15), plan updates (about $0.01 to $0.05) and preview (about $0.01), charged directly; each also shows under **Agent requests** |
 | **After you say yes in the conversation** | Deleting anything; repairing or rerunning answers; panels; uploading your own data, such as a twin bank |
 | **Not available to agents** | Approving, starting or declining a run or a bank; signing in with your password; sending your key anywhere but exploratwin.org |
 
 After preparing a run, the agent reports the survey, the number of twins, the
 estimate and the approval link; for a persona bank, its name, the number of
 profiles, the estimate and the link. Approved runs and banks are charged as on
-the website.
+the website. A persona bank plan your agent makes is yours: it opens in the
+website's persona generator too, where you can review or change it.
 
 ## What is in the skill
 

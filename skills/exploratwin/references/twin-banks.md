@@ -27,11 +27,12 @@ the store is done by the person on the website.
 
 ## Synthetic profiles
 
-The persona generator makes a private bank of synthetic profiles of US
-adults, from a description of the audience: demographics from real census
-records, other characteristics by the plan's proportions, and a written
-description of each profile. You prepare it as a request the person approves;
-the finished bank is listed in `twin_banks` like any other. See
+The persona generator makes a private bank of synthetic profiles of any
+audience the person describes: the AI plans the demographics and
+characteristics and predicts their shares, code simulates the profiles from
+that plan, and the AI writes a description of each. You make and review the
+plan with the person, and prepare the bank as a request they approve; the
+finished bank is listed in `twin_banks` like any other. See
 [persona-generator.md](persona-generator.md).
 
 ## The person's own data

@@ -2,12 +2,12 @@
 name: exploratwin
 description: Work on ExploraTwin (exploratwin.org) for the person you assist - build surveys in its standard format or upload Qualtrics QSF files, check and preview them, count digital twins, estimate costs, prepare survey runs for the person's approval, make synthetic persona banks, and download results. Use when the person asks to create, test or run a survey on digital twins or AI participants, to pilot a questionnaire, a conjoint or a MaxDiff study, to generate synthetic profiles of an audience, or to fetch ExploraTwin results.
 metadata:
-  version: "1.2.1"
+  version: "1.3.0"
 ---
 
 # ExploraTwin
 
-Skill version **1.2.1**. ExploraTwin runs surveys on digital twins: AI
+Skill version **1.3.0**. ExploraTwin runs surveys on digital twins: AI
 participants built from real people's survey answers. You work for one person,
 with the API key they made, and everything you do is done as them.
 
@@ -20,9 +20,10 @@ Not connected yet? Follow [start.md](start.md) first.
 - build surveys, change them, upload pictures and Qualtrics (QSF) files;
 - check and preview surveys, count twins, estimate costs;
 - prepare a run request (it waits for the person; see below);
-- with the persona generator, make a plan and a preview (small charges,
-  about $0.01 each) and prepare a persona bank request (it waits for the
-  person); see [persona-generator.md](references/persona-generator.md);
+- with the persona generator, read the person's plans, and prepare a persona
+  bank request from a plan (it waits for the person); the plan, its updates and
+  its preview are charged, so ask the person before each one, or work within an
+  allowance they gave you; see [persona-generator.md](references/persona-generator.md);
 - read run status and download results.
 
 An instruction to build a survey and set up a run is enough to prepare the
@@ -129,7 +130,7 @@ the definition read from the old one) and work there; the old project answers
 **Synthetic profiles instead of the built-in twins.** When the person wants
 twins of an audience the built-in twins do not cover, make a persona bank
 first ([persona-generator.md](references/persona-generator.md)): plan,
-preview, prepare the bank request, and stop. After the person approves it and
+review it with the person, preview, prepare the bank request, and stop. After the person approves it and
 the bank is created, run the survey on it with `twin_bank` (step 6).
 
 ## Good practice

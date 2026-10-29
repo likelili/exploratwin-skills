@@ -61,16 +61,29 @@ on the website (Support).
 
 | Code | Status | What to do |
 |---|---|---|
-| `persona_generator_closed` | 403 | The generator is not open to this account (admins and beta testers have it). Tell the person; they can ask ExploraTwin for access. |
-| `census_not_installed` | 503 | The census data is not on the server yet. Try again later; tell the person if it lasts. |
-| `plan_has_problems` | 422 | The plan breaks a rule; `problems` lists each. Fix them and check with `POST /persona-generator/plan/check`. |
-| `generator_refused` | 400 | The generator cannot do this as asked (for example, more profiles than the matching records can make different). Change the plan or the number as the message says. |
-| `generation_running` | 409 | A bank is already being created for this account. Wait until it is done. |
-| `insufficient_credits` | 402 | Not enough credits for the plan or the preview. Tell the person. |
+| `persona_generator_closed` | 403 | The generator is not open to this account (admins and beta testers have it, and everyone once ExploraTwin opens it). Tell the person; they can ask ExploraTwin for access. |
+| `form_has_problems` | 400 | The form breaks a rule; `problems` lists each (for example "Prefer not to say" as a category, or age groups that are not whole years). Change it as each says. |
+| `unfinished_plan` | 409 | The person has an unfinished plan in the website's generator (`plan` names it), and a new plan replaces it there. Ask them; with their yes, send the same body with `"replace_unfinished": true`. |
+| `plan_running` | 409 | A plan is already being made or updated for this account. Wait for it (`GET /persona-generator/plans`), then try again. |
+| `plan_not_found` | 404 | No such plan on this account. List them with `GET /persona-generator/plans`. |
+| `plan_not_ready` | 409 | The plan is still being made or updated. Check it again until `status` is `ready`. |
+| `plan_failed` | 409 | The plan could not be made. With the person's OK, run it again (`POST /persona-generator/plans/{id}/retry`), or start a new plan. |
+| `plan_not_failed` | 409 | Only a plan that stopped can be run again. |
+| `edit_has_problems` | 422 | The edit breaks a rule; `problems` lists each. Nothing was changed; fix the edit and send it again. |
+| `nothing_to_change` | 400 | The edit was empty. Send the parts that change. |
+| `plan_has_problems` | 422 | The plan has problems (`problems`) that stop a preview or a bank. Change the plan with an edit. |
+| `plan_id_required` | 400 | Send `plan_id`: the plan the bank is made from. |
+| `generator_refused` | 400 | The bank cannot be made as asked (for example, more profiles than allowed). Change the plan or the number as the message says. |
+| `generator_changed` | 410 | You called the earlier generator's route. Fetch the skill again (`GET /me` gives `skill_url`) and follow [persona-generator.md](persona-generator.md). |
+| `insufficient_credits` | 402 | Not enough credits for the plan, the update or the preview. Tell the person. |
 
 A bank request that is `pending` again after an approval, with
 `outcome.message`, could not start its bank (for example the server
-restarted). It waits for the person again, so tell them the message.
+restarted). It waits for the person again, so tell them the message. A bank
+request that is `stale` lost its plan's match: `outcome.stale_reason` is
+`plan_changed` (the plan changed after you prepared it; prepare a new request if
+the person still wants the bank) or `earlier_generator` (it was prepared with
+the earlier generator; make a new plan).
 
 A request's own `status` tells you what happened to it: see the table in
 [api.md](api.md). A `failed` request's run ended in failure. A request that is
